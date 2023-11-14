@@ -1,0 +1,28 @@
+input:
+    nrep: 40 #number of replicons per a plastid
+    ncp: 1 #number of plastids per cell
+    N: 20 #number of cells
+    mutfix: 500 #expected number of fixed mutations
+    subst_p: 0.01 #fraction of symmetric cell divisions
+    G: 40 #cell divisions per year (for one cell)
+    error_p: null #partitioning error, if null considered random (0.5)
+    u: 4.0E-11 #mutation rate per replicon per base pair per cell division
+    dl: 0.05 #detection limit (AF); can be a list but not together with the list of contibution
+    bneck_regime: [[4, 3, 'strict', 3.5E-11, null], [4, 1000, 'clone', 3.6E-11, null], [1, 30, 'relaxed', 3.9E-11, null], [null, null, 'no', 3.9E-11, null]] #branch (per year), sex (in years), name, recalculated u or None, recalculated error_p or null
+    cell_names: ['L31', 'L11', 'L12', 'L32', 'L13', 'L33', 'L14', 'L34', 'L15', 'L35', 'L16', 'L36', 'L17', 'L37', 'L18', 'L38', 'L19', 'L39', 'L110', 'L310']
+    contribution: 1 #proportion of L1 progenies to L3 assuming equality within the layer; can be a list but not together with a list of dl
+    cell_subst: {'L11': [['L15', 'L12', 'L16', 'L31'], [10, 10, 10, 3]], 'L15': [['L14', 'L11', 'L110', 'L35'], [10, 10, 10, 3]], 'L16': [['L110', 'L17', 'L11', 'L36'], [10, 10, 10, 3]], 'L110': [['L19', 'L16', 'L15', 'L310'], [10, 10, 10, 3]], 'L31': [['L35', 'L32', 'L36'], [1, 1, 1]], 'L35': [['L34', 'L31', 'L310'], [1, 1, 1]], 'L36': [['L310', 'L37', 'L31'], [1, 1, 1]], 'L310': [['L39', 'L36', 'L35'], [1, 1, 1]], 'L12': [['L11', 'L13', 'L17', 'L32'], [10, 10, 10, 3]], 'L32': [['L31', 'L33', 'L37'], [1, 1, 1]], 'L13': [['L12', 'L14', 'L18', 'L33'], [10, 10, 10, 3]], 'L33': [['L32', 'L34', 'L38'], [1, 1, 1]], 'L14': [['L13', 'L15', 'L19', 'L34'], [10, 10, 10, 3]], 'L34': [['L33', 'L35', 'L39'], [1, 1, 1]], 'L17': [['L16', 'L18', 'L12', 'L37'], [10, 10, 10, 3]], 'L37': [['L36', 'L38', 'L32'], [1, 1, 1]], 'L18': [['L17', 'L19', 'L13', 'L38'], [10, 10, 10, 3]], 'L38': [['L37', 'L39', 'L33'], [1, 1, 1]], 'L19': [['L18', 'L110', 'L14', 'L39'], [10, 10, 10, 3]], 'L39': [['L38', 'L310', 'L34'], [1, 1, 1]]}
+    stratification_prop: 10
+    total_pos: 12920202 #Z. marina mt neutral (in 163 samples total) - 12920202, Z. marina cp neutral (in 163 samples total) - 3284450
+    divergence_time: 243300 #years ago
+input_grids: #at least one parameter should be here; for a single run repeat any parameter from defaults (input), for example, nrep: [40]
+    nrep: [10, 30, 50, 70, 90, 120, 150, 180, 210, 250] #a list of values for the chosen parameter
+
+output:
+    out_table: path_to_output_file/output_file.tsv
+    edit_table: w # w - to rewrite the file, a - to continue writing into the file
+    het_age: False #ignored (False) if multiple dl or contribution; if True, for each simulation run multiple lines will be written to the output file that correspond to different mutation ages (in years)
+    comment: using u values for cp to fit nrep-ncp grid on a graph
+
+run:
+    proc_num: 24
